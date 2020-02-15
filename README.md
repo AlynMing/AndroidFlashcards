@@ -3,13 +3,11 @@ FlashCard
 ## Lab 1
 
 ### App Description
-`TODO://` Add app description
+App swaps between showing the question and answer to the question
 
 ### App Walk-though
 
 <img src="YOUR_GIF_URL_HERE" width=200><br>
-
-`TODO://` In the User stories section below, add an `x` between the `-[ ]` like this `- [x]` for any user story you complete. (☝️ Remove this paragraph after after checking off user stories)
 
 ## Required
 - [x] Create New Project in Android Studio
