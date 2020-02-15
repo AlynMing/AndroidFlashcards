@@ -7,7 +7,7 @@ App swaps between showing the question and answer to the question. Incorrect cho
 
 ### App Walk-though
 
-<img src="YOUR_GIF_URL_HERE" width=200><br>
+![](Lab1.gif)
 
 ## Required
 - [x] Create New Project in Android Studio
