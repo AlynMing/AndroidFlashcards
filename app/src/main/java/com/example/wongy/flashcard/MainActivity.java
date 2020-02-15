@@ -14,8 +14,38 @@ public class MainActivity extends AppCompatActivity {
     findViewById(R.id.flashcard_question).setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            findViewById(R.id.flashcard_question).setVisibility(view.INVISIBLE);
-            findViewById(R.id.flashcard_answer).setVisibility(view.VISIBLE);
+            findViewById(R.id.flashcard_question).setVisibility(view.VISIBLE);
+            findViewById(R.id.flashcard_answer1).setBackgroundColor(getResources().getColor(R.color.colorCream));
+            findViewById(R.id.flashcard_answer2).setBackgroundColor(getResources().getColor(R.color.colorCream));
+            findViewById(R.id.flashcard_answer3).setBackgroundColor(getResources().getColor(R.color.colorCream));
+        }
+    });
+
+    findViewById(R.id.flashcard_answer1).setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            findViewById(R.id.flashcard_answer1).setBackgroundColor(getResources().getColor(R.color.colorDarkRed));
+            findViewById(R.id.flashcard_answer2).setBackgroundColor(getResources().getColor(R.color.colorCream));
+            findViewById(R.id.flashcard_answer3).setBackgroundColor(getResources().getColor(R.color.colorLightGreen));
+        }
+    });
+
+
+    findViewById(R.id.flashcard_answer2).setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            findViewById(R.id.flashcard_answer1).setBackgroundColor(getResources().getColor(R.color.colorCream));
+            findViewById(R.id.flashcard_answer2).setBackgroundColor(getResources().getColor(R.color.colorDarkRed));
+            findViewById(R.id.flashcard_answer3).setBackgroundColor(getResources().getColor(R.color.colorLightGreen));
+        }
+    });
+
+    findViewById(R.id.flashcard_answer3).setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            findViewById(R.id.flashcard_answer1).setBackgroundColor(getResources().getColor(R.color.colorCream));
+            findViewById(R.id.flashcard_answer2).setBackgroundColor(getResources().getColor(R.color.colorCream));
+            findViewById(R.id.flashcard_answer3).setBackgroundColor(getResources().getColor(R.color.colorLightGreen));
         }
     });
 

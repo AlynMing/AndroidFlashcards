@@ -13,21 +13,53 @@
         android:layout_height="200dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:background="@drawable/card_background"
         android:gravity="center"
         android:text="Question"
         android:textAlignment="center"
+        android:textColor="@color/colorRed"
         android:textSize="40sp" />
 
     <TextView
-        android:id="@+id/flashcard_answer"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:id="@+id/flashcard_answer1"
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="243dp"
+        android:background="@color/colorCream"
+        android:gravity="center"
+        android:text="Wrong Answer"
+        android:textAlignment="center"
+        android:textColor="@color/colorBlack"
+        android:textSize="25dp" />
+
+    <TextView
+        android:id="@+id/flashcard_answer2"
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="164dp"
+        android:background="@color/colorCream"
+        android:gravity="center"
+        android:text="Wrong Answer"
+        android:textAlignment="center"
+        android:textColor="@color/colorBlack"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/flashcard_answer3"
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="86dp"
+        android:background="@color/colorCream"
         android:gravity="center"
         android:text="Answer"
         android:textAlignment="center"
-        android:textSize="40sp"
-        android:visibility="invisible" />
+        android:textColor="@color/colorBlack"
+        android:textSize="25sp" />
 
 </RelativeLayout>
