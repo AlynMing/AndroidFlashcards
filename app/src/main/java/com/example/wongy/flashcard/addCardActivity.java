@@ -13,9 +13,23 @@ public class addCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_card);
 
+        String question = getIntent().getStringExtra("String1");
+        String answer = getIntent().getStringExtra("String2");
+        final String _originalQ=question;
+        final String _originalA=answer;
+
+
+
+        ((EditText)findViewById(R.id.newAnswer)).setText(answer);
+        ((EditText)findViewById(R.id.newQuestion)).setText(question);
+
         findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent data= new Intent();
+                data.putExtra("String1", _originalQ);
+                data.putExtra("String2", _originalA);
+                setResult(RESULT_OK, data);
                 finish();
             }
         });
