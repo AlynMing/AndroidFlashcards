@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
     findViewById(R.id.flashcard_question).setOnClickListener(new View.OnClickListener() {
+
         @Override
         public void onClick(View view) {
             findViewById(R.id.flashcard_question).setVisibility(view.VISIBLE);
@@ -130,10 +131,6 @@ public class MainActivity extends AppCompatActivity {
             String string2 = data.getExtras().getString("String2");
             String string3 = data.getExtras().getString("String3");
             String string4 = data.getExtras().getString("String4");
-//            if (string1.equals("") && (string2.equals(""))){
-//                string1=_originalQ;
-//                string2=_originalA;
-//            }
             ((TextView)findViewById(R.id.flashcard_question)).setText(string1);
             ((TextView)findViewById(R.id.flashcard_answer3)).setText(string2);
             ((TextView)findViewById(R.id.flashcard_answer1)).setText(string3);
