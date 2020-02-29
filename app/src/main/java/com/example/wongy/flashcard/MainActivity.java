@@ -10,6 +10,9 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     private Boolean _visible = true;
+    private String _originalQ;
+    private String _originalA;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +83,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(MainActivity.this, addCardActivity.class);
+
+            String oldQuestion = ((TextView)findViewById(R.id.flashcard_question)).getText().toString();
+            String oldAnswer = ((TextView)findViewById(R.id.flashcard_answer3)).getText().toString();
+            String oldIncAnswer1 = ((TextView)findViewById(R.id.flashcard_answer1)).getText().toString();
+            String oldIncAnswer2 = ((TextView)findViewById(R.id.flashcard_answer2)).getText().toString();
+            intent.putExtra("String1",oldQuestion);
+            intent.putExtra("String2",oldAnswer);
+            intent.putExtra("String3",oldIncAnswer1);
+            intent.putExtra("String4",oldIncAnswer2);
+
+            intent.putExtra("Set","False");
+
             MainActivity.this.startActivityForResult(intent,100);
         }
     });
@@ -92,8 +107,14 @@ public class MainActivity extends AppCompatActivity {
 
             String oldQuestion = ((TextView)findViewById(R.id.flashcard_question)).getText().toString();
             String oldAnswer = ((TextView)findViewById(R.id.flashcard_answer3)).getText().toString();
+            String oldIncAnswer1 = ((TextView)findViewById(R.id.flashcard_answer1)).getText().toString();
+            String oldIncAnswer2 = ((TextView)findViewById(R.id.flashcard_answer2)).getText().toString();
             intent.putExtra("String1",oldQuestion);
             intent.putExtra("String2",oldAnswer);
+            intent.putExtra("String3",oldIncAnswer1);
+            intent.putExtra("String4",oldIncAnswer2);
+
+            intent.putExtra("Set","True");
 
             MainActivity.this.startActivityForResult(intent,100);
 
@@ -107,8 +128,16 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 100) { // this 100 needs to match the 100 we used when we called startActivityForResult!
             String string1 = data.getExtras().getString("String1"); // 'string1' needs to match the key we used when we put the string in the Intent
             String string2 = data.getExtras().getString("String2");
+            String string3 = data.getExtras().getString("String3");
+            String string4 = data.getExtras().getString("String4");
+//            if (string1.equals("") && (string2.equals(""))){
+//                string1=_originalQ;
+//                string2=_originalA;
+//            }
             ((TextView)findViewById(R.id.flashcard_question)).setText(string1);
             ((TextView)findViewById(R.id.flashcard_answer3)).setText(string2);
+            ((TextView)findViewById(R.id.flashcard_answer1)).setText(string3);
+            ((TextView)findViewById(R.id.flashcard_answer2)).setText(string4);
         }
     }
 }

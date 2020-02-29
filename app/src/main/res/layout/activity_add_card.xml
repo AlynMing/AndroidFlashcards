@@ -37,16 +37,35 @@
         android:inputType="textMultiLine" />
 
 
-
     <EditText
-        android:id="@+id/newAnswer"
+        android:id="@+id/newCorrectAnswer"
         android:layout_width="303dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="113dp"
         android:ems="10"
-        android:hint="Write answer here"
+        android:hint="Write correct answer here"
+        android:inputType="textMultiLine" />
+
+    <EditText
+        android:id="@+id/newIncorrectAnswer1"
+        android:layout_width="303dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="179dp"
+        android:ems="10"
+        android:hint="Write incorrect answer here"
+        android:inputType="textMultiLine" />
+
+    <EditText
+        android:id="@+id/newIncorrectAnswer2"
+        android:layout_width="303dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:ems="10"
+        android:hint="Write incorrect answer here"
         android:inputType="textMultiLine" />
 
 </RelativeLayout>
