@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     FlashcardDatabase flashcardDatabase;
     List<Flashcard> allFlashcards;
     int currentCardDisplayedIndex = 0;
+    private final int edit_card= 50;
+    private Flashcard cardToEdit;
 
 
 
@@ -127,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view){
 
+            cardToEdit=allFlashcards.get(currentCardDisplayedIndex);
             Intent intent = new Intent(MainActivity.this, addCardActivity.class);
 
             String oldQuestion = ((TextView)findViewById(R.id.flashcard_question)).getText().toString();
@@ -140,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
             intent.putExtra("Set","True");
 
-            MainActivity.this.startActivityForResult(intent,50);
+            MainActivity.this.startActivityForResult(intent,edit_card);
 
         }
     });
@@ -238,21 +241,25 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 (findViewById(R.id.next)).setVisibility(VISIBLE);
             }
+        } else if (requestCode == edit_card) {
+            String question = data.getExtras().getString("String1"); // 'string1' needs to match the key we used when we put the string in the Intent
+            String correctAnswer = data.getExtras().getString("String2");
+            String incorrectAnswer1 = data.getExtras().getString("String3");
+            String incorrectAnswer2 = data.getExtras().getString("String4");
+            cardToEdit.setQuestion(question);
+            cardToEdit.setAnswer(correctAnswer);
+            cardToEdit.setWrongAnswer1(incorrectAnswer1);
+            cardToEdit.setWrongAnswer2(incorrectAnswer2);
+
+            flashcardDatabase.updateCard(cardToEdit);
+            ((TextView) findViewById(R.id.flashcard_question)).setText(allFlashcards.get(currentCardDisplayedIndex).getQuestion());
+            ((TextView) findViewById(R.id.flashcard_answer3)).setText(allFlashcards.get(currentCardDisplayedIndex).getAnswer());
+            ((TextView) findViewById(R.id.flashcard_answer1)).setText(allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer1());
+            ((TextView) findViewById(R.id.flashcard_answer2)).setText(allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer2());
+
+
+
         }
-//        else if (requestCode == 50) { // this 100 needs to match the 100 we used when we called startActivityForResult!
-//            String question = data.getExtras().getString("String1"); // 'string1' needs to match the key we used when we put the string in the Intent
-//            String correctAnswer = data.getExtras().getString("String2");
-//            String incorrectAnswer1 = data.getExtras().getString("String3");
-//            String incorrectAnswer2 = data.getExtras().getString("String4");
-//            flashcardDatabase.insertCard(new Flashcard(question, correctAnswer, incorrectAnswer1, incorrectAnswer2 ));
-//            allFlashcards = flashcardDatabase.getAllCards();
-//            if (allFlashcards.size()==1){
-//                ((TextView) findViewById(R.id.flashcard_question)).setText(allFlashcards.get(currentCardDisplayedIndex).getQuestion());
-//                ((TextView) findViewById(R.id.flashcard_answer3)).setText(allFlashcards.get(currentCardDisplayedIndex).getAnswer());
-//                ((TextView) findViewById(R.id.flashcard_answer1)).setText(allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer1());
-//                ((TextView) findViewById(R.id.flashcard_answer2)).setText(allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer2());
-//            }
-//        }
 
 
     }
