@@ -192,32 +192,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        findViewById(R.id.delete).setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        flashcardDatabase.deleteCard(((TextView) findViewById(R.id.flashcard_question)).getText().toString());
-//                        allFlashcards = flashcardDatabase.getAllCards();
-//                        if (allFlashcards.size()!=0) {
-//                            ((TextView) findViewById(R.id.flashcard_question)).setText(allFlashcards.get(currentCardDisplayedIndex).getQuestion());
-//                            ((TextView) findViewById(R.id.flashcard_answer3)).setText(allFlashcards.get(currentCardDisplayedIndex).getAnswer());
-//                            ((TextView) findViewById(R.id.flashcard_answer1)).setText(allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer1());
-//                            ((TextView) findViewById(R.id.flashcard_answer2)).setText(allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer2());
-//                        } else {
-//                            ((TextView) findViewById(R.id.flashcard_question)).setText("Please make a card");
-//                            (findViewById(R.id.flashcard_answer3)).setVisibility(INVISIBLE);
-//                            (findViewById(R.id.flashcard_answer1)).setVisibility(INVISIBLE);
-//                            (findViewById(R.id.flashcard_answer2)).setVisibility(INVISIBLE);
-//                            (findViewById(R.id.next)).setVisibility(INVISIBLE);
-//                            (findViewById(R.id.delete)).setVisibility(INVISIBLE);
-//                        }
-//                    }
-//                });
-//
-//            }
-//        });
+        findViewById(R.id.delete).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        flashcardDatabase.deleteCard(((TextView) findViewById(R.id.flashcard_question)).getText().toString());
+                        allFlashcards = flashcardDatabase.getAllCards();
+                        if (allFlashcards.size()!=0) {
+                            ((TextView) findViewById(R.id.flashcard_question)).setText(allFlashcards.get(0).getQuestion());
+                            ((TextView) findViewById(R.id.flashcard_answer3)).setText(allFlashcards.get(0).getAnswer());
+                            ((TextView) findViewById(R.id.flashcard_answer1)).setText(allFlashcards.get(0).getWrongAnswer1());
+                            ((TextView) findViewById(R.id.flashcard_answer2)).setText(allFlashcards.get(0).getWrongAnswer2());
+                        } else {
+                            ((TextView) findViewById(R.id.flashcard_question)).setText("Please make a card");
+                            (findViewById(R.id.flashcard_answer3)).setVisibility(INVISIBLE);
+                            (findViewById(R.id.flashcard_answer1)).setVisibility(INVISIBLE);
+                            (findViewById(R.id.flashcard_answer2)).setVisibility(INVISIBLE);
+                            (findViewById(R.id.next)).setVisibility(INVISIBLE);
+                            (findViewById(R.id.delete)).setVisibility(INVISIBLE);
+                        }
+                        if (allFlashcards.size()==1){
+                            (findViewById(R.id.next)).setVisibility(INVISIBLE);
+                            (findViewById(R.id.back)).setVisibility(INVISIBLE);
+                        }
+                    }
+                });
+
+            }
+        });
 
 
     }
