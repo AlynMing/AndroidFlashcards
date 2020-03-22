@@ -11,8 +11,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.plattysoft.leonids.ParticleSystem;
-
 import java.util.List;
 
 import static android.view.View.INVISIBLE;
@@ -193,10 +191,13 @@ public class MainActivity extends AppCompatActivity {
 
 
                 // make sure we don't get an IndexOutOfBoundsError if we are viewing the last indexed card in our list
-                if (currentCardDisplayedIndex == allFlashcards.size() - 1) {
+                if (currentCardDisplayedIndex == allFlashcards.size()) {
 //                    currentCardDisplayedIndex = 0;
                     findViewById(R.id.next).setVisibility(INVISIBLE);
                 }
+
+                System.out.println(Integer.toString(currentCardDisplayedIndex));
+                System.out.println(Integer.toString(allFlashcards.size()));
 
 
                 findViewById(R.id.flashcard_question).startAnimation(leftOutAnim);
