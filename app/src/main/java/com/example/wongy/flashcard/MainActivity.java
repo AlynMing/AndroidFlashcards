@@ -11,6 +11,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.plattysoft.leonids.ParticleSystem;
+
 import java.util.List;
 
 import static android.view.View.INVISIBLE;
@@ -100,6 +102,11 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.flashcard_answer1).setBackgroundColor(getResources().getColor(R.color.colorCream));
             findViewById(R.id.flashcard_answer2).setBackgroundColor(getResources().getColor(R.color.colorCream));
             findViewById(R.id.flashcard_answer3).setBackgroundColor(getResources().getColor(R.color.colorLightGreen));
+
+
+//            new ParticleSystem(MainActivity.this, 50, R.drawable.confetti, 3000)
+//                    .setSpeedRange(0.2f, 0.5f)
+//                    .oneShot(findViewById(R.id.flashcard_answer3), 2);
         }
     });
 
