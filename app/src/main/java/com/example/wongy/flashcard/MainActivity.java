@@ -1,9 +1,13 @@
 package com.example.wongy.flashcard;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
     int currentCardDisplayedIndex = 0;
     private final int edit_card= 50;
     private Flashcard cardToEdit;
-
-
 
 
     @Override
@@ -51,6 +53,25 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.flashcard_answer1).setBackgroundColor(getResources().getColor(R.color.colorCream));
             findViewById(R.id.flashcard_answer2).setBackgroundColor(getResources().getColor(R.color.colorCream));
             findViewById(R.id.flashcard_answer3).setBackgroundColor(getResources().getColor(R.color.colorLightGreen));
+
+            View answerSideView = findViewById(R.id.flashcard_answer3);
+
+// get the center for the clipping circle
+            int cx = answerSideView.getWidth() / 2;
+            int cy = answerSideView.getHeight() / 2;
+
+// get the final radius for the clipping circle
+            float finalRadius = (float) Math.hypot(cx, cy);
+
+// create the animator for this view (the start radius is zero)
+            Animator anim = ViewAnimationUtils.createCircularReveal(answerSideView, cx, cy, 0f, finalRadius);
+
+// hide the question and show the answer to prepare for playing the animation!
+            answerSideView.setVisibility(View.VISIBLE);
+
+            anim.setDuration(3000);
+            anim.start();
+
         }
     });
 
@@ -122,6 +143,9 @@ public class MainActivity extends AppCompatActivity {
 
             MainActivity.this.startActivityForResult(intent,100);
             findViewById(R.id.next).setVisibility(VISIBLE);
+            allFlashcards = flashcardDatabase.getAllCards();
+
+            overridePendingTransition(R.anim.slide_from_right,R.anim.slide_to_left);
         }
     });
 
@@ -144,6 +168,8 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("Set","True");
 
             MainActivity.this.startActivityForResult(intent,edit_card);
+            //transition from left to right
+            overridePendingTransition(R.anim.slide_from_right,R.anim.slide_to_left);
 
         }
     });
@@ -154,18 +180,54 @@ public class MainActivity extends AppCompatActivity {
                 currentCardDisplayedIndex++;
                 findViewById(R.id.back).setVisibility(VISIBLE);
 
+                final Animation leftOutAnim = AnimationUtils.loadAnimation(view.getContext(), R.anim.slide_to_left);
+                final Animation rightInAnim = AnimationUtils.loadAnimation(view.getContext(), R.anim.slide_from_right);
+
+
+
                 // make sure we don't get an IndexOutOfBoundsError if we are viewing the last indexed card in our list
                 if (currentCardDisplayedIndex == allFlashcards.size() - 1) {
 //                    currentCardDisplayedIndex = 0;
                     findViewById(R.id.next).setVisibility(INVISIBLE);
                 }
-                ((TextView) findViewById(R.id.flashcard_question)).setText(allFlashcards.get(currentCardDisplayedIndex).getQuestion());
-                ((TextView) findViewById(R.id.flashcard_answer3)).setText(allFlashcards.get(currentCardDisplayedIndex).getAnswer());
-                ((TextView) findViewById(R.id.flashcard_answer1)).setText(allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer1());
-                ((TextView) findViewById(R.id.flashcard_answer2)).setText(allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer2());
-                findViewById(R.id.flashcard_answer1).setBackgroundColor(getResources().getColor(R.color.colorCream));
-                findViewById(R.id.flashcard_answer2).setBackgroundColor(getResources().getColor(R.color.colorCream));
-                findViewById(R.id.flashcard_answer3).setBackgroundColor(getResources().getColor(R.color.colorCream));
+
+
+                findViewById(R.id.flashcard_question).startAnimation(leftOutAnim);
+
+                leftOutAnim.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        // this method is called when the animation first starts
+                        findViewById(R.id.flashcard_answer1).startAnimation(leftOutAnim);
+                        findViewById(R.id.flashcard_answer2).startAnimation(leftOutAnim);
+                        findViewById(R.id.flashcard_answer3).startAnimation(leftOutAnim);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        // this method is called when the animation is finished playing
+                        findViewById(R.id.flashcard_question).startAnimation(rightInAnim);
+                        findViewById(R.id.flashcard_answer1).startAnimation(rightInAnim);
+                        findViewById(R.id.flashcard_answer2).startAnimation(rightInAnim);
+                        findViewById(R.id.flashcard_answer3).startAnimation(rightInAnim);
+
+                        ((TextView) findViewById(R.id.flashcard_question)).setText(allFlashcards.get(currentCardDisplayedIndex).getQuestion());
+                        ((TextView) findViewById(R.id.flashcard_answer3)).setText(allFlashcards.get(currentCardDisplayedIndex).getAnswer());
+                        ((TextView) findViewById(R.id.flashcard_answer1)).setText(allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer1());
+                        ((TextView) findViewById(R.id.flashcard_answer2)).setText(allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer2());
+                        findViewById(R.id.flashcard_answer1).setBackgroundColor(getResources().getColor(R.color.colorCream));
+                        findViewById(R.id.flashcard_answer2).setBackgroundColor(getResources().getColor(R.color.colorCream));
+                        findViewById(R.id.flashcard_answer3).setBackgroundColor(getResources().getColor(R.color.colorCream));
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                        // we don't need to worry about this method
+                    }
+                });
+
+
+//
 
             }
         });
@@ -176,18 +238,57 @@ public class MainActivity extends AppCompatActivity {
                 currentCardDisplayedIndex--;
                 findViewById(R.id.next).setVisibility(VISIBLE);
 
+                final Animation rightOutAnim = AnimationUtils.loadAnimation(view.getContext(), R.anim.slide_to_right);
+                final Animation leftInAnim = AnimationUtils.loadAnimation(view.getContext(), R.anim.slide_from_left);
+
 
                 // make sure we don't get an IndexOutOfBoundsError if we are viewing the last indexed card in our list
                 if (currentCardDisplayedIndex ==0) {
                     findViewById(R.id.back).setVisibility(INVISIBLE);
                 }
-                ((TextView) findViewById(R.id.flashcard_question)).setText(allFlashcards.get(currentCardDisplayedIndex).getQuestion());
-                ((TextView) findViewById(R.id.flashcard_answer3)).setText(allFlashcards.get(currentCardDisplayedIndex).getAnswer());
-                ((TextView) findViewById(R.id.flashcard_answer1)).setText(allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer1());
-                ((TextView) findViewById(R.id.flashcard_answer2)).setText(allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer2());
-                findViewById(R.id.flashcard_answer1).setBackgroundColor(getResources().getColor(R.color.colorCream));
-                findViewById(R.id.flashcard_answer2).setBackgroundColor(getResources().getColor(R.color.colorCream));
-                findViewById(R.id.flashcard_answer3).setBackgroundColor(getResources().getColor(R.color.colorCream));
+
+                findViewById(R.id.flashcard_question).startAnimation(rightOutAnim);
+
+                rightOutAnim.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        // this method is called when the animation first starts
+                        findViewById(R.id.flashcard_answer1).startAnimation(rightOutAnim);
+                        findViewById(R.id.flashcard_answer2).startAnimation(rightOutAnim);
+                        findViewById(R.id.flashcard_answer3).startAnimation(rightOutAnim);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        // this method is called when the animation is finished playing
+                        findViewById(R.id.flashcard_question).startAnimation(leftInAnim);
+                        findViewById(R.id.flashcard_answer1).startAnimation(leftInAnim);
+                        findViewById(R.id.flashcard_answer2).startAnimation(leftInAnim);
+                        findViewById(R.id.flashcard_answer3).startAnimation(leftInAnim);
+
+                        ((TextView) findViewById(R.id.flashcard_question)).setText(allFlashcards.get(currentCardDisplayedIndex).getQuestion());
+                        ((TextView) findViewById(R.id.flashcard_answer3)).setText(allFlashcards.get(currentCardDisplayedIndex).getAnswer());
+                        ((TextView) findViewById(R.id.flashcard_answer1)).setText(allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer1());
+                        ((TextView) findViewById(R.id.flashcard_answer2)).setText(allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer2());
+                        findViewById(R.id.flashcard_answer1).setBackgroundColor(getResources().getColor(R.color.colorCream));
+                        findViewById(R.id.flashcard_answer2).setBackgroundColor(getResources().getColor(R.color.colorCream));
+                        findViewById(R.id.flashcard_answer3).setBackgroundColor(getResources().getColor(R.color.colorCream));
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                        // we don't need to worry about this method
+                    }
+                });
+
+
+//                ((TextView) findViewById(R.id.flashcard_question)).setText(allFlashcards.get(currentCardDisplayedIndex).getQuestion());
+//                ((TextView) findViewById(R.id.flashcard_answer3)).setText(allFlashcards.get(currentCardDisplayedIndex).getAnswer());
+//                ((TextView) findViewById(R.id.flashcard_answer1)).setText(allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer1());
+//                ((TextView) findViewById(R.id.flashcard_answer2)).setText(allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer2());
+//                findViewById(R.id.flashcard_answer1).setBackgroundColor(getResources().getColor(R.color.colorCream));
+//                findViewById(R.id.flashcard_answer2).setBackgroundColor(getResources().getColor(R.color.colorCream));
+//                findViewById(R.id.flashcard_answer3).setBackgroundColor(getResources().getColor(R.color.colorCream));
 
             }
         });
@@ -225,6 +326,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 
 
     @Override
